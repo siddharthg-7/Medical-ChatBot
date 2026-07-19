@@ -35,9 +35,6 @@ custom_theme = gr.themes.Soft(
 )
 
 CUSTOM_CSS = """
-/* Import modern font */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
-
 /* Force Light Mode Aesthetics & Increase Font Sizes globally */
 :root, .dark {
     --body-text-color: #0f172a !important;

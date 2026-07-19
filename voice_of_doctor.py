@@ -1,4 +1,4 @@
-from deepgram import DeepgramClient
+from deepgram import DeepgramClient, SpeakOptions
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -6,21 +6,18 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_DOCTOR_AUDIO = BASE_DIR / "doctor_response.mp3"
+
 def convert_text_to_doctor_audio(text, output_filepath=DEFAULT_DOCTOR_AUDIO):
     deepgram_api_key = os.environ.get("DEEPGRAM_API_KEY")
     deepgram = DeepgramClient(api_key=deepgram_api_key)
-    audio = deepgram.speak.v1.audio.generate(
-        text=text,
-        model=os.environ.get("DEEPGRAM_TTS_MODEL", "aura-2-thalia-en"),
+    
+    options = SpeakOptions(
+        model=os.environ.get("DEEPGRAM_TTS_MODEL", "aura-asteria-en"),
         encoding="mp3",
     )
-
-    output_filepath = Path(output_filepath)
-    with output_filepath.open("wb") as file:
-        for chunk in audio:
-            file.write(chunk)
-
-    return output_filepath
+    
+    deepgram.speak.rest.v1.save(str(output_filepath), {"text": text}, options)
+    return Path(output_filepath)
 
 import subprocess
 import platform
