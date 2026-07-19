@@ -285,7 +285,7 @@ def process_inputs(audio_filepath, image_filepath, video_filepath):
     # Return results and hide the loading HTML block
     return patient_text, doctor_text, str(Path(doctor_audio)), gr.update(visible=False)
 
-with gr.Blocks(title=APP_TITLE, theme=custom_theme, css=CUSTOM_CSS) as iface:
+with gr.Blocks(title=APP_TITLE) as iface:
     # Add SVG Gradient Definition
     gr.HTML("""
     <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
@@ -412,6 +412,10 @@ with gr.Blocks(title=APP_TITLE, theme=custom_theme, css=CUSTOM_CSS) as iface:
 
 if __name__ == "__main__":
     iface.launch(
+        server_name="0.0.0.0",
+        server_port=int(os.environ.get("PORT", 7860)),
+        theme=custom_theme,
+        css=CUSTOM_CSS,
         debug=True, 
         head='<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>'
     )
