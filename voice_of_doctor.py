@@ -1,4 +1,4 @@
-from deepgram import DeepgramClient, SpeakOptions
+from deepgram import DeepgramClient
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -11,13 +11,18 @@ def convert_text_to_doctor_audio(text, output_filepath=DEFAULT_DOCTOR_AUDIO):
     deepgram_api_key = os.environ.get("DEEPGRAM_API_KEY")
     deepgram = DeepgramClient(api_key=deepgram_api_key)
     
-    options = SpeakOptions(
+    audio = deepgram.speak.v1.audio.generate(
+        text=text,
         model=os.environ.get("DEEPGRAM_TTS_MODEL", "aura-asteria-en"),
         encoding="mp3",
     )
-    
-    deepgram.speak.rest.v1.save(str(output_filepath), {"text": text}, options)
-    return Path(output_filepath)
+
+    output_filepath = Path(output_filepath)
+    with output_filepath.open("wb") as file:
+        for chunk in audio:
+            file.write(chunk)
+
+    return output_filepath
 
 import subprocess
 import platform
