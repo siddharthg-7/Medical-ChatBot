@@ -268,6 +268,25 @@ body, .gradio-container {
 .gr-padded {
     padding: 16px !important;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-card {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 20px !important;
+        padding: 24px !important;
+    }
+    .header-title h1 {
+        font-size: 32px !important;
+    }
+    .main-container {
+        padding: 16px 12px !important;
+    }
+    .panel-card {
+        padding: 24px !important;
+    }
+}
 """
 
 def process_inputs(audio_filepath, image_filepath, video_filepath):
@@ -314,7 +333,7 @@ with gr.Blocks(title=APP_TITLE) as iface:
         
         with gr.Row(equal_height=True):
             # Left Panel - Patient Input (35%)
-            with gr.Column(scale=35, elem_classes="panel-card"):
+            with gr.Column(scale=35, min_width=320, elem_classes="panel-card"):
                 gr.HTML("""
                 <div class="section-title">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
@@ -353,7 +372,7 @@ with gr.Blocks(title=APP_TITLE) as iface:
                 """)
                 
             # Right Panel - Doctor Response (65%)
-            with gr.Column(scale=65, elem_classes="panel-card"):
+            with gr.Column(scale=65, min_width=320, elem_classes="panel-card"):
                 gr.HTML("""
                 <div class="section-title">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.1 2.1 0 0 0 0 2.97l.46.46a2.1 2.1 0 0 0 2.97 0l2.97-2.97"></path></svg>
